@@ -38,7 +38,7 @@ show tables;
 -- insert: DML(C)
 insert into pet values('망고','조영인', 'f', '2014-11-10', 'cat', null);
 
-select * from pet;
+
 
 
 
