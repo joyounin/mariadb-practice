@@ -36,11 +36,22 @@ drop table pet;
 show tables;
 
 -- insert: DML(C)
-insert into pet values('망고','조영인', 'f', '2014-11-10', 'cat', null);
+insert into pet values('망고','조영인', 'cat','f', '2014-11-10', null);
 
+-- select: DML(R)
+select * from pet;
 
+-- update: DML(U)
+update pet set name='뿌꾸' where name = '망고';
 
+-- delete: DML(D)
+delete from pet where name='뿌꾸';
 
+-- load data
+load data local infile 'D:\pet.txt' into table pet;
+
+-- select 
+select name, species from pet where name = 'Bowser';
 
 
 
