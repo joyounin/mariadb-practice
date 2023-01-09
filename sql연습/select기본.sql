@@ -87,7 +87,7 @@ order by salary desc;
   select first_name as '이름', gender as '성별', hire_date as '입사일'
     from employees
    where gender = 'm'
-order by '입사일' asc;
+order by 입사일 asc;
 
 -- 예제 4 : 직원들의 사번, 월급을 사번(asc), 월급은(desc)
   select emp_no, salary, from_date, to_date
