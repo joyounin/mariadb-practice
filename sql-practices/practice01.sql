@@ -29,7 +29,7 @@ select if(gender = 'M', '남자', '여자') as 성별, count(*) as '명'
 -- 문제4.
 -- 현재(to_date='9999-01-01', 근무하고 있는 직원 수는 몇 명입니까? (salaries 테이블을 사용합니다.) 
 select count(*)
-  from dept_emp
+  from salaries
  where to_date = '9999-01-01';
 
 -- 문제5.
