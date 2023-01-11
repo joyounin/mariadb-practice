@@ -13,7 +13,7 @@ public class UpdateTest01 {
 		vo.setName("경영지원");
 		
 		Boolean result = update(vo);
-		
+		System.out.println(result ? "성공" : "실패");
 	}
 
 	private static boolean update(DeptVo vo) {
