@@ -6,13 +6,15 @@ select avg(salary)
   from salaries
  where to_date = '9999-01-01';
  
- select count(b.emp_no)
+ select count(*)
    from employees a, salaries b
  where a.emp_no = b.emp_no
    and b.to_date = '9999-01-01'
    and b.salary > (select avg(salary)
 					 from salaries
 				    where to_date = '9999-01-01');
+                    
+
 -- 문제2. (생략 x)
 -- 현재, 각 부서별로 최고의 급여를 받는 사원의 사번, 이름, 부서 급여를 조회하세요. 
 -- 단 조회결과는 연봉의 내림차순으로 정렬되어 나타나야 합니다. 
@@ -49,13 +51,15 @@ order by c.emp_no asc;
  
 -- 문제4.
 -- 현재, 사원들의 사번, 이름, 매니저 이름, 부서 이름으로 출력해 보세요.
-select b.emp_no, concat(a.first_name, ' ', a.last_name), c.dept_name
-  from employees a, dept_manager b, departments c
+select b.emp_no, concat(a.first_name, ' ', a.last_name) as name, concat(e.first_name, ' ', e.last_name), c.dept_name
+  from employees a, dept_manager b, departments c, dept_emp d, employees e
  where a.emp_no = b.emp_no
    and b.dept_no = c.dept_no
-   and b.to_date = '9999-01-01'
-order by a.emp_no;
- 
+   and c.dept_no = d.dept_no
+   and e.emp_no = e.emp_no
+   and d.to_date = '9999-01-01'
+   and b.to_date = '9999-01-01';
+   
 -- 문제5.
 -- 현재, 평균급여가 가장 높은 부서의 사원들의 사번, 이름, 직책, 급여를 조회하고 급여 순으로 출력하세요.
 
@@ -79,7 +83,8 @@ select max(a.avg_salary)
              and b.to_date = '9999-01-01'
              and c.to_date = '9999-01-01'
 		group by a.dept_name) a;
-        
+
+
 -- 3) sol1
 select a.emp_no, a.first_name, b.title, avg(c.salary) as avg_salary, d.dept_name
   from employees a, titles b, salaries c, departments d, dept_emp e
@@ -90,15 +95,14 @@ select a.emp_no, a.first_name, b.title, avg(c.salary) as avg_salary, d.dept_name
    and b.to_date = '9999-01-01'
    and c.to_date = '9999-01-01'
    and e.to_date = '9999-01-01'
-group by d.dept_name
-having avg_salary = (select max(a.avg_salary)
-					   from (  select a.dept_name, avg(salary) as avg_salary
-					   from departments a, dept_emp b, salaries c
-					  where a.dept_no = b.dept_no
-						and b.emp_no = c.emp_no
-						and b.to_date = '9999-01-01'
-						and c.to_date = '9999-01-01'
-				   group by a.dept_name) a);
+   and  avg_salary = (select max(a.avg_salary)
+					  from (  select a.dept_name, avg(salary) as avg_salary
+							    from departments a, dept_emp b, salaries c
+							   where a.dept_no = b.dept_no
+							     and b.emp_no = c.emp_no
+					             and b.to_date = '9999-01-01'
+								 and c.to_date = '9999-01-01'
+						    group by a.dept_name) a);
 
 -- 문제6.
 -- 평균 급여가 가장 높은 부서는? 
@@ -114,15 +118,51 @@ group by a.dept_name
 order by avg_salary desc;
 
 -- 2) 가장 높은 부서는?
-select avg(c.salary) as avg_salay, a.dept_name
+select a.dept_name, avg(c.salary) as avg_salay
   from departments a, dept_emp b, salaries c
  where a.dept_no = b.dept_no
    and b.emp_no = c.emp_no
+   and b.to_date = '9999-01-01'
+   and c.to_date = '9999-01-01'
+group by a.dept_name
+order by avg_salay desc
+limit 0,1;
    
 -- 문제7.
 -- 평균 급여가 가장 높은 직책?
 -- 직책, 평균급여
 
+-- 평균 급여
+select a.title, avg(b.salary) as avg_salary
+    from titles a, salaries b 
+   where a.emp_no = b.emp_no 
+     and a.to_date = '9999-01-01'
+     and b.to_date = '9999-01-01'
+group by a.title;
+
+-- 평균 급여가 높은 직책
+select max(a.avg_salary)
+  from (select a.title, avg(b.salary) as avg_salary
+          from titles a, salaries b 
+         where a.emp_no = b.emp_no 
+           and a.to_date = '9999-01-01'
+           and b.to_date = '9999-01-01'
+      group by a.title) a;
+      
+-- sol1
+select a.title, avg(b.salary) as avg_salary
+    from titles a, salaries b 
+   where a.emp_no = b.emp_no 
+     and a.to_date = '9999-01-01'
+     and b.to_date = '9999-01-01'
+group by a.title
+having avg_salary = (select max(a.avg_salary)
+					   from (  select a.title, avg(b.salary) as avg_salary
+                                 from titles a, salaries b 
+                                where a.emp_no = b.emp_no 
+                                  and a.to_date = '9999-01-01'
+                                  and b.to_date = '9999-01-01'
+                             group by a.title) a);
 -- 문제8.
 -- 현재 자신의 매니저보다 높은 급여를 받고 있는 직원은?
 -- 부서이름, 사원이름, 급여, 매니저 이름, 메니저 급여 순으로 출력합니다.
