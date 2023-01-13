@@ -6,6 +6,7 @@ public class BookVo {
 	private String title;
 	private String rent;
 	private String authorname;
+	
 	public Long getAuthorno() {
 		return authorno;
 	}
