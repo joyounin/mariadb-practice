@@ -194,7 +194,7 @@ public class BookMall {
 	private static void displayorder_bookInfo() {
 		List<Orders_BookVo> list = new Orders_BookDao().findAll();
 		for(Orders_BookVo vo : list) {
-			System.out.println(vo.getNo() + "." + " 도서번호 : " + vo.getBook_no() + " 도서제목: " + vo.getBook_title() + " 수량: " + vo.getCnt());
+			System.out.println(vo.getNo() + "." + " 도서번호 : " + vo.getBook_no() + " 도서제목: " + vo.getBook_title() + " 수량: " + vo.getCnt() + " 가격: " + vo.getBprice());
 		}
 	}
 

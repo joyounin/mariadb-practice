@@ -23,9 +23,9 @@ public class Orders_BookDao {
 			conn = getConnection();
 			
 			String sql = 
-					  "  select a.no, a.book_no, b.title, a.cnt"
-					  + "  from orders_book a, book b, orders c"
-					  + " where a.no = b.no";
+					  "  select a.no, a.book_no, b.title, a.cnt, b.price*a.cnt"
+					  + "  from orders_book a, book b"
+					  + " where a.no = b.no;";
 			
 			pstmt = conn.prepareStatement(sql);
 
@@ -36,6 +36,7 @@ public class Orders_BookDao {
 				vo.setBook_no(rs.getLong(2));
 				vo.setBook_title(rs.getString(3));
 				vo.setCnt(rs.getInt(4));
+				vo.setBprice(rs.getInt(5));
 
 				result.add(vo);
 			}

@@ -6,6 +6,7 @@ public class Orders_BookVo {
 	private Integer cnt;
 	private Long book_no;
 	private Long oreders_no;
+	private Integer bprice;
 	
 	public Long getNo() {
 		return no;
@@ -37,9 +38,16 @@ public class Orders_BookVo {
 	public void setOreders_no(Long oreders_no) {
 		this.oreders_no = oreders_no;
 	}
+	public Integer getBprice() {
+		return bprice;
+	}
+	public void setBprice(Integer bprice) {
+		this.bprice = bprice;
+	}
 	@Override
 	public String toString() {
 		return "Orders_BookVo [no=" + no + ", book_title=" + book_title + ", cnt=" + cnt + ", book_no=" + book_no
-				+ ", oreders_no=" + oreders_no + "]";
+				+ ", oreders_no=" + oreders_no + ", bprice=" + bprice + "]";
 	}
+	
 }
