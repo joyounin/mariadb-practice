@@ -24,7 +24,7 @@ public class Orders_BookDao {
 			
 			String sql = 
 					  "  select a.no, a.book_no, b.title, a.cnt"
-					  + "  from orders_book a, book b"
+					  + "  from orders_book a, book b, orders c"
 					  + " where a.no = b.no";
 			
 			pstmt = conn.prepareStatement(sql);

@@ -42,7 +42,4 @@ public class Orders_BookVo {
 		return "Orders_BookVo [no=" + no + ", book_title=" + book_title + ", cnt=" + cnt + ", book_no=" + book_no
 				+ ", oreders_no=" + oreders_no + "]";
 	}
-	
-	
-
 }
